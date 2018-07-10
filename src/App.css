@@ -22,7 +22,25 @@
   font-size: large;
 }
 
-@keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+.bookmaker {
+  border: 1px solid #84C4F1;
+  right: 10px;
+  margin-left: 15%;
+  margin-right: 15%;
+  background-color: #D7ECFA ;
+  border-radius: 10px;
 }
+
+.exchange {
+  border: 1px solid #FBAFBF;
+  right: 10px;
+  margin-left: 15%;
+  margin-right: 15%;
+  background-color: #FDDEE5 ;
+  border-radius: 10px;
+}
+
+/*@keyframes App-logo-spin {*/
+  /*from { transform: rotate(0deg); }*/
+  /*to { transform: rotate(360deg); }*/
+/*}*/

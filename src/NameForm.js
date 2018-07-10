@@ -39,8 +39,8 @@ class NameForm extends React.Component {
         );
 
         const BackStake = isNaN(this.state.BackStake) ? 0 : parseFloat(this.state.BackStake);
-
         const LayStake = isNaN(this.state.LayStake) ? 0 : parseFloat(this.state.LayStake) ;
+
         const LayCommision =  isNaN(parseInt(this.state.LayCommission)) ? 0 : parseInt(this.state.LayCommission) ;
         const LayProfit = LayStake - LayStake*(LayCommision/100);
         const LayOdds = isNaN(this.state.LayOdds) ? 0: this.state.LayOdds;
@@ -56,31 +56,29 @@ class NameForm extends React.Component {
 
             <div>
                 <ColoredLine color='black'/>
-
-            <form >
+                <div className='bookmaker'>
+            <form>
                 <label>
                     Back Stake :
                     <input type="text" name="BackStake" value={this.state.BackStake} onChange={this.handleChange} />
                 </label>
-
             </form>
 
-            <form >
+            <form>
                 <label>
                     Back Odds:
                     <input type="text" name="BackOdds" value={this.state.BackOdds} onChange={this.handleChange} />
                 </label>
-
             </form>
-
+                </div>
                 <ColoredLine color='black'/>
 
+                <div className='exchange'>
             <form >
                 <label>
                     Lay Stake:
                     <input type="text" name="LayStake" value={this.state.LayStake} onChange={this.handleChange} />
                 </label>
-
             </form>
 
 
@@ -89,7 +87,6 @@ class NameForm extends React.Component {
                     Lay Odds:
                     <input type="text" name="LayOdds" value={this.state.LayOdds} onChange={this.handleChange} />
                 </label>
-
             </form>
 
 
@@ -98,8 +95,9 @@ class NameForm extends React.Component {
                         Lay Commission:
                         <input type="text" name="LayCommission" value={this.state.LayCommission} onChange={this.handleChange} />
                     </label>
-
                 </form>
+                </div>
+
                 <ColoredLine color='black'/>
 
                 <p> What I win with the Bookie : {this.round(BookieProfit,2) }  </p>
