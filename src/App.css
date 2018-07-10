@@ -1,3 +1,8 @@
+body {
+  font-family: "Source Sans Pro", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 14px;
+}
+
 .App {
   text-align: center;
 }
@@ -25,20 +30,33 @@
 .bookmaker {
   border: 1px solid #84C4F1;
   right: 10px;
-  margin-left: 15%;
-  margin-right: 15%;
+  margin-left: 10%;
+  margin-right: 10%;
   background-color: #D7ECFA ;
   border-radius: 10px;
+  display: flex;
+  justify-content: space-evenly;
 }
 
 .exchange {
   border: 1px solid #FBAFBF;
   right: 10px;
-  margin-left: 15%;
-  margin-right: 15%;
+  margin-left: 10%;
+  margin-right: 10%;
   background-color: #FDDEE5 ;
   border-radius: 10px;
+  display: flex;
+  justify-content: space-evenly;
 }
+
+
+
+.inside-div {
+  padding-top: 1%;
+  padding-bottom: 1%;
+}
+
+
 
 /*@keyframes App-logo-spin {*/
   /*from { transform: rotate(0deg); }*/

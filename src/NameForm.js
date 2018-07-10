@@ -10,7 +10,8 @@ class NameForm extends React.Component {
             BackOdds: '',
             LayStake: '',
             LayOdds : '',
-            LayCommission: ''
+            LayCommission: '',
+            BackCommission: 0
 
         };
 
@@ -38,11 +39,12 @@ class NameForm extends React.Component {
             />
         );
 
-        const BackStake = isNaN(this.state.BackStake) ? 0 : parseFloat(this.state.BackStake);
+        const BackStakeFirst = isNaN(this.state.BackStake) ? 0 : parseFloat(this.state.BackStake);
+        const BackStake = (isNaN(BackStakeFirst) ? 0 : parseFloat(BackStakeFirst));
         const LayStake = isNaN(this.state.LayStake) ? 0 : parseFloat(this.state.LayStake) ;
 
         const LayCommision =  isNaN(parseInt(this.state.LayCommission)) ? 0 : parseInt(this.state.LayCommission) ;
-        const LayProfit = LayStake - LayStake*(LayCommision/100);
+        const LayProfit =  isNaN(LayStake - LayStake*(LayCommision/100)) ? 0 : parseFloat(LayStake - LayStake*(LayCommision/100)) ;
         const LayOdds = isNaN(this.state.LayOdds) ? 0: this.state.LayOdds;
 
 
@@ -57,54 +59,71 @@ class NameForm extends React.Component {
             <div>
                 <ColoredLine color='black'/>
                 <div className='bookmaker'>
-            <form>
-                <label>
-                    Back Stake :
-                    <input type="text" name="BackStake" value={this.state.BackStake} onChange={this.handleChange} />
-                </label>
-            </form>
+                    <div className='inside-div'>
+                        <form>
+                            <label>
+                                Back Stake :
+                                <input type="text" name="BackStake" value={this.state.BackStake} onChange={this.handleChange} />
+                            </label>
+                        </form>
 
-            <form>
-                <label>
-                    Back Odds:
-                    <input type="text" name="BackOdds" value={this.state.BackOdds} onChange={this.handleChange} />
-                </label>
-            </form>
+                        <form>
+                            <label>
+                                Back Odds:
+                                <input type="text" name="BackOdds" value={this.state.BackOdds} onChange={this.handleChange} />
+                            </label>
+                        </form>
+                    </div>
+                    <div className='inside-div'>
+                        <form >
+                            <label>
+                                Back Commission:
+                                <input type="text" name="BackCommission" value={this.state.BackCommission} onChange={this.handleChange} />
+                            </label>
+                        </form>
+                    </div>
                 </div>
+
                 <ColoredLine color='black'/>
 
                 <div className='exchange'>
-            <form >
-                <label>
-                    Lay Stake:
-                    <input type="text" name="LayStake" value={this.state.LayStake} onChange={this.handleChange} />
-                </label>
-            </form>
+                    <div className='inside-div'>
+                        <form >
+                            <label>
+                                Lay Stake:
+                                <input type="text" name="LayStake" value={this.state.LayStake} onChange={this.handleChange} />
+                            </label>
+                        </form>
 
 
-            <form >
-                <label>
-                    Lay Odds:
-                    <input type="text" name="LayOdds" value={this.state.LayOdds} onChange={this.handleChange} />
-                </label>
-            </form>
+                        <form >
+                            <label>
+                                Lay Odds:
+                                <input type="text" name="LayOdds" value={this.state.LayOdds} onChange={this.handleChange} />
+                            </label>
+                        </form>
+                    </div>
+                    <div className='inside-div'>
+                        <form >
+                            <label>
+                                Lay Commission:
+                                <input type="text" name="LayCommission" value={this.state.LayCommission} onChange={this.handleChange} />
+                            </label>
+                        </form>
+                    </div>
 
 
-                <form >
-                    <label>
-                        Lay Commission:
-                        <input type="text" name="LayCommission" value={this.state.LayCommission} onChange={this.handleChange} />
-                    </label>
-                </form>
+
                 </div>
 
                 <ColoredLine color='black'/>
 
-                <p> What I win with the Bookie : {this.round(BookieProfit,2) }  </p>
+                <p > What I WIN with the Bookie : {this.round(BookieProfit,2) }  </p>
+                <p > What I LOSE with the Bookie : {this.round(BackStake,2) }  </p>
 
-                <p> At Lay odds of {LayOdds} my Liability is : {this.round(ExchangeLiability,2)} </p>
+                <p > What I WIN with the Exchange : {this.round(LayProfit,2) }  </p>
+                <p > What I LOSE with the Exchange : {this.round(ExchangeLiability,2) }  </p>
 
-                <p>  Overall profit will be : {this.round(BookieProfit -ExchangeLiability,2)} </p>
                 <p> Lay Commission is : {LayCommision}  </p>
 
                 <ColoredLine color='black'/>
