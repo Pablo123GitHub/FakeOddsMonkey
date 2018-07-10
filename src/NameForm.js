@@ -9,13 +9,13 @@ class NameForm extends React.Component {
             BackStake: '',
             BackOdds: '',
             LayStake: '',
-            LayOdds : ''
+            LayOdds : '',
+            LayCommission: ''
 
         };
 
         this.handleChange = this.handleChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
-
+        this.round = this.round.bind(this);
     }
 
     handleChange(event) {
@@ -23,11 +23,9 @@ class NameForm extends React.Component {
     }
 
 
-    handleSubmit(event) {
-        alert('A name was submitted: ' + this.state.value);
-        event.preventDefault();
+    round (value, decimals) {
+        return Number(Math.round(value+'e'+decimals)+'e-'+decimals);
     }
-
 
     render() {
         const ColoredLine = ({ color }) => (
@@ -39,49 +37,85 @@ class NameForm extends React.Component {
                 }}
             />
         );
+
+        const BackStake = isNaN(this.state.BackStake) ? 0 : parseFloat(this.state.BackStake);
+
+        const LayStake = isNaN(this.state.LayStake) ? 0 : parseFloat(this.state.LayStake) ;
+        const LayCommision =  isNaN(parseInt(this.state.LayCommission)) ? 0 : parseInt(this.state.LayCommission) ;
+        const LayProfit = LayStake - LayStake*(LayCommision/100);
+        const LayOdds = isNaN(this.state.LayOdds) ? 0: this.state.LayOdds;
+
+
+        const BookieProfitInput = ( parseFloat(this.state.BackStake) * (parseFloat(this.state.BackOdds) - 1));
+        const BookieProfit = isNaN(BookieProfitInput) ? 0 : BookieProfitInput;
+
+        const ExchangeLiabilityInput = (parseFloat(this.state.LayStake) * (parseFloat(this.state.LayOdds) - 1));
+        const ExchangeLiability =  isNaN(ExchangeLiabilityInput) ? 0 : ExchangeLiabilityInput;
+
         return (
+
             <div>
                 <ColoredLine color='black'/>
 
-            <form onSubmit={this.handleSubmit}>
+            <form >
                 <label>
                     Back Stake :
                     <input type="text" name="BackStake" value={this.state.BackStake} onChange={this.handleChange} />
                 </label>
-                {/*<input type="submit" value="Submit" />*/}
+
             </form>
 
-            <form onSubmit={this.handleSubmit}>
+            <form >
                 <label>
                     Back Odds:
                     <input type="text" name="BackOdds" value={this.state.BackOdds} onChange={this.handleChange} />
                 </label>
-                {/*<input type="submit" value="Submit" />*/}
+
             </form>
 
                 <ColoredLine color='black'/>
 
-            <form onSubmit={this.handleSubmit}>
+            <form >
                 <label>
                     Lay Stake:
                     <input type="text" name="LayStake" value={this.state.LayStake} onChange={this.handleChange} />
                 </label>
-                {/*<input type="submit" value="Submit" />*/}
+
             </form>
 
-            <form onSubmit={this.handleSubmit}>
+
+            <form >
                 <label>
                     Lay Odds:
                     <input type="text" name="LayOdds" value={this.state.LayOdds} onChange={this.handleChange} />
                 </label>
-                {/*<input type="submit" value="Submit" />*/}
+
             </form>
+
+
+                <form >
+                    <label>
+                        Lay Commission:
+                        <input type="text" name="LayCommission" value={this.state.LayCommission} onChange={this.handleChange} />
+                    </label>
+
+                </form>
                 <ColoredLine color='black'/>
 
-                <p>here is what I win with the Bookie : {this.state.BackStake} </p>
+                <p> What I win with the Bookie : {this.round(BookieProfit,2) }  </p>
 
-                <p> Liability : {(parseFloat(this.state.BackStake) * (parseFloat(this.state.BackOdds) - 1))  }     </p>
+                <p> At Lay odds of {LayOdds} my Liability is : {this.round(ExchangeLiability,2)} </p>
 
+                <p>  Overall profit will be : {this.round(BookieProfit -ExchangeLiability,2)} </p>
+                <p> Lay Commission is : {LayCommision}  </p>
+
+                <ColoredLine color='black'/>
+
+                <p> Profit breakdown </p>
+
+                <p> If Bookie wins : {this.round(BookieProfit,2)} - {this.round(ExchangeLiability,2)} = {this.round(BookieProfit - ExchangeLiability, 2)} </p>
+
+                <p> If Exchange wins : -{this.round(BackStake,2)} + {this.round(LayProfit,2)}  =  {this.round(-BackStake + LayProfit,2)} </p>
             </div>
         );
     }
