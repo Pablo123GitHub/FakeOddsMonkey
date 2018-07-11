@@ -17,6 +17,10 @@ class NameForm extends React.Component {
 
         this.handleChange = this.handleChange.bind(this);
         this.round = this.round.bind(this);
+        this.handleClick = this.handleClick.bind(this);
+        this.outputBookieTotal = this.outputBookieTotal.bind(this);
+        this.outputExchangeTotal = this.outputExchangeTotal.bind(this);
+
     }
 
     handleChange(event) {
@@ -27,6 +31,57 @@ class NameForm extends React.Component {
     round (value, decimals) {
         return Number(Math.round(value+'e'+decimals)+'e-'+decimals);
     }
+
+    handleClick() {
+        let incrementLayStake = 1;
+
+        console.log('outputBookie 1', this.outputBookieTotal( 1));
+        console.log('outputExchange 1', this.outputExchangeTotal( 1));
+
+        while (this.outputBookieTotal( incrementLayStake) > this.outputExchangeTotal( incrementLayStake)) {
+            incrementLayStake++;
+            console.log('incrementLayStake', incrementLayStake);
+        }
+
+        let incrementLayStakeLowerEnd = (incrementLayStake -1)*100;
+
+        while (this.outputBookieTotal( incrementLayStakeLowerEnd/100) > this.outputExchangeTotal( incrementLayStakeLowerEnd/100)) {
+            incrementLayStakeLowerEnd += 1;
+            console.log('incrementLayStakeLowerEnd', incrementLayStakeLowerEnd);
+        }
+
+        console.log('final rounded result', incrementLayStakeLowerEnd/100 )
+
+        const balancedLayStake = incrementLayStakeLowerEnd/100 ;
+
+        this.setState(
+            {
+                LayStake: balancedLayStake
+            }
+        )
+    }
+
+    outputBookieTotal (LayStake) {
+        const BookieProfitInput = ( parseFloat(this.state.BackStake) * (parseFloat(this.state.BackOdds) - 1));
+        const BookieProfit = isNaN(BookieProfitInput) ? 0 : BookieProfitInput;
+        const LayOdds = isNaN(this.state.LayOdds) ? 0: this.state.LayOdds;
+        const ExchangeLiabilityInput = (parseFloat(LayStake) * (parseFloat(LayOdds) - 1));
+        const ExchangeLiability =  isNaN(ExchangeLiabilityInput) ? 0 : ExchangeLiabilityInput;
+
+        return this.round(BookieProfit - ExchangeLiability, 2);
+    }
+
+    outputExchangeTotal (LayStake) {
+        const BackStakeFirst = isNaN(this.state.BackStake) ? 0 : parseFloat(this.state.BackStake);
+        const BackStake = (isNaN(BackStakeFirst) ? 0 : parseFloat(BackStakeFirst));
+
+        const LayCommision =  isNaN(parseInt(this.state.LayCommission)) ? 0 : parseInt(this.state.LayCommission) ;
+        const LayProfit =  isNaN(LayStake - LayStake*(LayCommision/100)) ? 0 : parseFloat(LayStake - LayStake*(LayCommision/100)) ;
+
+        return this.round(-BackStake + LayProfit,2);
+    }
+
+
 
     render() {
         const ColoredLine = ({ color }) => (
@@ -55,8 +110,6 @@ class NameForm extends React.Component {
         const isBookieProfitable = this.round(BookieProfit - ExchangeLiability, 2) >=0;
         const isExchangeProfitable = this.round(-BackStake + LayProfit,2) >= 0;
 
-        console.log(isBookieProfitable);
-        console.log(isExchangeProfitable);
         return (
 
             <div>
@@ -93,16 +146,14 @@ class NameForm extends React.Component {
                     <div className='inside-div'>
                         <form >
                             <label>
-                                Lay Stake:
-                                <input type="text" name="LayStake" value={this.state.LayStake} onChange={this.handleChange} />
-                            </label>
-                        </form>
-
-
-                        <form >
-                            <label>
                                 Lay Odds:
                                 <input type="text" name="LayOdds" value={this.state.LayOdds} onChange={this.handleChange} />
+                            </label>
+                        </form>
+                        <form >
+                            <label>
+                                Lay Stake:
+                                <input type="text" name="LayStake" value={this.state.LayStake} onChange={this.handleChange} />
                             </label>
                         </form>
                     </div>
@@ -115,8 +166,18 @@ class NameForm extends React.Component {
                         </form>
                     </div>
 
+                </div>
 
+                <ColoredLine color='#333333'/>
+                <div>
+                    Ici j'indique exactement les Lay Stake pour obtenir l'equilibre
+                    <button onClick={this.handleClick}>
+                      Set Lay Stake to 666
+                    </button>
 
+                    <p>
+                        Lay Stake : {this.state.LayStake}
+                    </p>
                 </div>
 
                 <ColoredLine color='#333333'/>
@@ -129,22 +190,25 @@ class NameForm extends React.Component {
                             <th></th>
                             <th>Bookmaker</th>
                             <th>Exchange</th>
+                            <th></th>
                             <th>Total</th>
 
                         </tr>
                         <tr>
                             <td className='table-header-bookmaker' >If Bookmaker wins</td>
-                            <td><span className='first-summary green' >+{this.round(BookieProfit,2)}</span></td>
-                            <td><span className='first-summary red'>-{this.round(ExchangeLiability,2)}</span></td>
+                            <td><span className='first-summary green' >+£{this.round(BookieProfit,2)}</span></td>
+                            <td><span className='first-summary red'>-£{this.round(ExchangeLiability,2)}</span></td>
+                            <td>=</td>
                             <td><span className={isBookieProfitable ? 'first-summary green': 'first-summary red'}>
-                        {this.round(BookieProfit - ExchangeLiability, 2)} </span></td>
+                        £{this.round(BookieProfit - ExchangeLiability, 2)} </span></td>
                         </tr>
                         <tr>
                             <td className='table-header-exchange'>If Exchange wins</td>
-                            <td><span className='first-summary red'>-{this.round(BackStake,2)}</span></td>
-                            <td><span className='first-summary green'>+{this.round(LayProfit,2)}</span></td>
+                            <td><span className='first-summary red'>-£{this.round(BackStake,2)}</span></td>
+                            <td><span className='first-summary green'>+£{this.round(LayProfit,2)}</span></td>
+                            <td>=</td>
                             <td><span className={isExchangeProfitable ? 'first-summary green': 'first-summary red'}>
-                        {this.round(-BackStake + LayProfit,2)} </span></td>
+                        £{this.round(-BackStake + LayProfit,2)} </span></td>
                         </tr>
 
                     </table>
