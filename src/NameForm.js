@@ -47,13 +47,16 @@ class NameForm extends React.Component {
         const LayProfit =  isNaN(LayStake - LayStake*(LayCommision/100)) ? 0 : parseFloat(LayStake - LayStake*(LayCommision/100)) ;
         const LayOdds = isNaN(this.state.LayOdds) ? 0: this.state.LayOdds;
 
+        const ExchangeLiabilityInput = (parseFloat(LayStake) * (parseFloat(LayOdds) - 1));
+        const ExchangeLiability =  isNaN(ExchangeLiabilityInput) ? 0 : ExchangeLiabilityInput;
 
         const BookieProfitInput = ( parseFloat(this.state.BackStake) * (parseFloat(this.state.BackOdds) - 1));
         const BookieProfit = isNaN(BookieProfitInput) ? 0 : BookieProfitInput;
+        const isBookieProfitable = this.round(BookieProfit - ExchangeLiability, 2) >=0;
+        const isExchangeProfitable = this.round(-BackStake + LayProfit,2) >= 0;
 
-        const ExchangeLiabilityInput = (parseFloat(this.state.LayStake) * (parseFloat(this.state.LayOdds) - 1));
-        const ExchangeLiability =  isNaN(ExchangeLiabilityInput) ? 0 : ExchangeLiabilityInput;
-
+        console.log(isBookieProfitable);
+        console.log(isExchangeProfitable);
         return (
 
             <div>
@@ -118,21 +121,31 @@ class NameForm extends React.Component {
 
                 <ColoredLine color='black'/>
 
-                <p > What I WIN with the Bookie : {this.round(BookieProfit,2) }  </p>
-                <p > What I LOSE with the Bookie : {this.round(BackStake,2) }  </p>
+                <p className='first-summary'> What I WIN with the Bookie :  {this.round(BookieProfit,2)}  </p>
+                <p className='first-summary'> What I LOSE with the Bookie : {this.round(BackStake,2) }  </p>
 
-                <p > What I WIN with the Exchange : {this.round(LayProfit,2) }  </p>
-                <p > What I LOSE with the Exchange : {this.round(ExchangeLiability,2) }  </p>
+                <p className='first-summary'> What I WIN with the Exchange : {this.round(LayProfit,2) }  </p>
+                <p className='first-summary'> What I LOSE with the Exchange : {this.round(ExchangeLiability,2) }  </p>
 
-                <p> Lay Commission is : {LayCommision}  </p>
+                <p className='first-summary'> Lay Commission is : {LayCommision}  </p>
 
                 <ColoredLine color='black'/>
 
                 <p> Profit breakdown </p>
 
-                <p> If Bookie wins : {this.round(BookieProfit,2)} - {this.round(ExchangeLiability,2)} = {this.round(BookieProfit - ExchangeLiability, 2)} </p>
+                <p> If Bookie wins :
+                    <span className='first-summary green' >{this.round(BookieProfit,2)}</span>
+                    - <span className='first-summary red'>{this.round(ExchangeLiability,2)}</span>
+                    = <span className={isBookieProfitable ? 'first-summary green': 'first-summary red'}>
+                        {this.round(BookieProfit - ExchangeLiability, 2)} </span>
+                </p>
 
-                <p> If Exchange wins : -{this.round(BackStake,2)} + {this.round(LayProfit,2)}  =  {this.round(-BackStake + LayProfit,2)} </p>
+                <p> If Exchange wins :
+                    <span className='first-summary red'>-{this.round(BackStake,2)}</span>
+                    + <span className='first-summary green'>{this.round(LayProfit,2)}</span>
+                    =   <span className={isExchangeProfitable ? 'first-summary green': 'first-summary red'}>
+                        {this.round(-BackStake + LayProfit,2)} </span>
+                </p>
             </div>
         );
     }
