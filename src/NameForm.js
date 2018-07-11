@@ -20,13 +20,11 @@ class NameForm extends React.Component {
         this.handleClick = this.handleClick.bind(this);
         this.outputBookieTotal = this.outputBookieTotal.bind(this);
         this.outputExchangeTotal = this.outputExchangeTotal.bind(this);
-
     }
 
     handleChange(event) {
         this.setState({[event.target.name]: event.target.value});
     }
-
 
     round (value, decimals) {
         return Number(Math.round(value+'e'+decimals)+'e-'+decimals);
@@ -34,26 +32,16 @@ class NameForm extends React.Component {
 
     handleClick() {
         let incrementLayStake = 1;
-
-        console.log('outputBookie 1', this.outputBookieTotal( 1));
-        console.log('outputExchange 1', this.outputExchangeTotal( 1));
-
         while (this.outputBookieTotal( incrementLayStake) > this.outputExchangeTotal( incrementLayStake)) {
             incrementLayStake++;
-            console.log('incrementLayStake', incrementLayStake);
         }
 
         let incrementLayStakeLowerEnd = (incrementLayStake -1)*100;
-
         while (this.outputBookieTotal( incrementLayStakeLowerEnd/100) > this.outputExchangeTotal( incrementLayStakeLowerEnd/100)) {
             incrementLayStakeLowerEnd += 1;
-            console.log('incrementLayStakeLowerEnd', incrementLayStakeLowerEnd);
         }
 
-        console.log('final rounded result', incrementLayStakeLowerEnd/100 )
-
         const balancedLayStake = incrementLayStakeLowerEnd/100 ;
-
         this.setState(
             {
                 LayStake: balancedLayStake
@@ -172,7 +160,7 @@ class NameForm extends React.Component {
                 <div>
                     Ici j'indique exactement les Lay Stake pour obtenir l'equilibre
                     <button onClick={this.handleClick}>
-                      Set Lay Stake to 666
+                      Set Lay Stake to
                     </button>
 
                     <p>
