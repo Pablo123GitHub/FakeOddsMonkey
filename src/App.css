@@ -49,7 +49,41 @@ body {
   justify-content: space-evenly;
 }
 
+.table-header-bookmaker {
+  border: 1px solid #84C4F1;
+  right: 10px;
+  margin-left: 10%;
+  margin-right: 10%;
+  background-color: #D7ECFA ;
+  border-radius: 7px;
 
+}
+
+.table-header-exchange {
+  border: 1px solid #FBAFBF;
+  right: 10px;
+  margin-left: 10%;
+  margin-right: 10%;
+  background-color: #FDDEE5 ;
+  border-radius: 7px;
+}
+
+.header-title {
+  border: 1px solid black;
+  color: white;
+  right: 10px;
+  font-size: 20px;
+  margin-left: 10%;
+  margin-right: 10%;
+  background-color: #333333 ;
+  border-radius: 7px;
+  display: flex;
+  justify-content: center;
+}
+
+.table-column-header {
+  border-bottom: 50px;
+}
 
 .inside-div {
   padding-top: 1%;
@@ -74,3 +108,8 @@ font-weight: bold;
   /*from { transform: rotate(0deg); }*/
   /*to { transform: rotate(360deg); }*/
 /*}*/
+
+.profit-breakdown {
+  margin-left:auto;
+  margin-right:auto;
+}

@@ -60,7 +60,7 @@ class NameForm extends React.Component {
         return (
 
             <div>
-                <ColoredLine color='black'/>
+                <ColoredLine color='#333333'/>
                 <div className='bookmaker'>
                     <div className='inside-div'>
                         <form>
@@ -87,7 +87,7 @@ class NameForm extends React.Component {
                     </div>
                 </div>
 
-                <ColoredLine color='black'/>
+                <ColoredLine color='#333333'/>
 
                 <div className='exchange'>
                     <div className='inside-div'>
@@ -119,33 +119,37 @@ class NameForm extends React.Component {
 
                 </div>
 
-                <ColoredLine color='black'/>
+                <ColoredLine color='#333333'/>
 
-                <p className='first-summary'> What I WIN with the Bookie :  {this.round(BookieProfit,2)}  </p>
-                <p className='first-summary'> What I LOSE with the Bookie : {this.round(BackStake,2) }  </p>
+                <h1 className='header-title'> Profit breakdown </h1>
 
-                <p className='first-summary'> What I WIN with the Exchange : {this.round(LayProfit,2) }  </p>
-                <p className='first-summary'> What I LOSE with the Exchange : {this.round(ExchangeLiability,2) }  </p>
+                <div>
+                    <table className='profit-breakdown'>
+                        <tr className='table-column-header'>
+                            <th></th>
+                            <th>Bookmaker</th>
+                            <th>Exchange</th>
+                            <th>Total</th>
 
-                <p className='first-summary'> Lay Commission is : {LayCommision}  </p>
+                        </tr>
+                        <tr>
+                            <td className='table-header-bookmaker' >If Bookmaker wins</td>
+                            <td><span className='first-summary green' >+{this.round(BookieProfit,2)}</span></td>
+                            <td><span className='first-summary red'>-{this.round(ExchangeLiability,2)}</span></td>
+                            <td><span className={isBookieProfitable ? 'first-summary green': 'first-summary red'}>
+                        {this.round(BookieProfit - ExchangeLiability, 2)} </span></td>
+                        </tr>
+                        <tr>
+                            <td className='table-header-exchange'>If Exchange wins</td>
+                            <td><span className='first-summary red'>-{this.round(BackStake,2)}</span></td>
+                            <td><span className='first-summary green'>+{this.round(LayProfit,2)}</span></td>
+                            <td><span className={isExchangeProfitable ? 'first-summary green': 'first-summary red'}>
+                        {this.round(-BackStake + LayProfit,2)} </span></td>
+                        </tr>
 
-                <ColoredLine color='black'/>
+                    </table>
+                </div>
 
-                <p> Profit breakdown </p>
-
-                <p> If Bookie wins :
-                    <span className='first-summary green' >{this.round(BookieProfit,2)}</span>
-                    - <span className='first-summary red'>{this.round(ExchangeLiability,2)}</span>
-                    = <span className={isBookieProfitable ? 'first-summary green': 'first-summary red'}>
-                        {this.round(BookieProfit - ExchangeLiability, 2)} </span>
-                </p>
-
-                <p> If Exchange wins :
-                    <span className='first-summary red'>-{this.round(BackStake,2)}</span>
-                    + <span className='first-summary green'>{this.round(LayProfit,2)}</span>
-                    =   <span className={isExchangeProfitable ? 'first-summary green': 'first-summary red'}>
-                        {this.round(-BackStake + LayProfit,2)} </span>
-                </p>
             </div>
         );
     }
