@@ -169,12 +169,19 @@ class NameForm extends React.Component {
 
                 </div>
 
-                <ColoredLine color='#333333'/>
                 <div>
 
-                    <p>
-                        Lay Stake : {this.state.LayStake}
-                    </p>
+                    {this.state.LayStake > 0 &&
+
+                    <div>
+                        <ColoredLine color='#333333'/>
+                        <p>
+                            You could lay : <span className='lay-stake-info'>{"hein", this.state.LayStake} </span>
+                        </p>
+                    </div>
+
+                    }
+
                 </div>
 
                 <ColoredLine color='#333333'/>
