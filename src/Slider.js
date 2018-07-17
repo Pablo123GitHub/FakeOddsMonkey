@@ -14,12 +14,12 @@ class Slider extends Component {
                 <input
                     onChange={this.props.handleRange}
                     step={this.props.step}
-                    alue={this.props.value}
+                    value={this.props.value}
                     type="range"
                     min={this.props.min}
                     max={this.props.max}
 
-                    v
+
                 />
             </div>
         )

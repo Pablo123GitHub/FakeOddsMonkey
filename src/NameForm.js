@@ -14,8 +14,8 @@ class NameForm extends Component {
             LayCommission: '',
             BackCommission: 0,
             SliderValue: 0,
-            min: 0,
-            max:100
+            min: -20,
+            max:20
 
         };
 
@@ -64,7 +64,10 @@ class NameForm extends Component {
         const balancedLayStake = incrementLayStakeLowerEnd/100 ;
         this.setState(
             {
-                LayStake: balancedLayStake
+                LayStake: balancedLayStake,
+                SliderValue: balancedLayStake,
+                max: balancedLayStake + balancedLayStake*0.1,
+                min: balancedLayStake - balancedLayStake*0.1
             }
         )
     }
