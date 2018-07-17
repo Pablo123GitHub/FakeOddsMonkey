@@ -27,7 +27,6 @@ class NameForm extends Component {
         this.outputExchangeTotal = this.outputExchangeTotal.bind(this);
         this.handleUnderOverLay = this.handleUnderOverLay.bind(this);
 
-
     }
 
     handleChange(event) {
@@ -57,7 +56,7 @@ class NameForm extends Component {
 
 
     round (value, decimals) {
-        return Number(Math.round(value+'e'+decimals)+'e-'+decimals);
+        return Number(Math.round(value+'e'+decimals)+'e-'+decimals).toFixed(2);
     }
 
     handleClick() {
@@ -76,8 +75,8 @@ class NameForm extends Component {
             {
                 LayStake: balancedLayStake,
                 SliderValue: balancedLayStake,
-                maxOverLayValue: balancedLayStake + balancedLayStake*0.1,
-                minUnderLayValue: balancedLayStake - balancedLayStake*0.1
+                maxOverLayValue: this.round(balancedLayStake + balancedLayStake*0.1, 2),
+                minUnderLayValue: this.round(balancedLayStake - balancedLayStake*0.1, 2)
             }
         )
     }
@@ -119,11 +118,11 @@ class NameForm extends Component {
 
         const BackOddsFirst = isNaN(this.state.BackOdds) ? 0 : parseFloat(this.state.BackOdds);
         const BackOdds = (isNaN(BackOddsFirst) ? 0 : parseFloat(BackOddsFirst));
-        const LayStake = isNaN(this.state.LayStake) ? 0 : parseFloat(this.state.LayStake) ;
+        const LayStake = this.round(isNaN(this.state.LayStake) ? 0 : parseFloat(this.state.LayStake),2) ;
 
         const LayCommission =  isNaN(parseInt(this.state.LayCommission)) ? 0 : parseInt(this.state.LayCommission) ;
         const LayProfit =  isNaN(LayStake - LayStake*(LayCommission/100)) ? 0 : parseFloat(LayStake - LayStake*(LayCommission/100)) ;
-        const LayOdds = isNaN(this.state.LayOdds) ? 0: this.state.LayOdds;
+        const LayOdds = this.round(isNaN(this.state.LayOdds) ? 0: this.state.LayOdds, 2);
 
         const ExchangeLiabilityInput = (parseFloat(LayStake) * (parseFloat(LayOdds) - 1));
         const ExchangeLiability =  isNaN(ExchangeLiabilityInput) ? 0 : ExchangeLiabilityInput;
@@ -171,7 +170,7 @@ class NameForm extends Component {
                         <form >
                             <label>
                                 Lay Stake:
-                                <input type="text" name="LayStake" value={this.state.LayStake} onChange={this.handleChange} />
+                                <input type="text" name="LayStake" value={LayStake} onChange={this.handleChange} />
                             </label>
                         </form>}
 
@@ -203,7 +202,7 @@ class NameForm extends Component {
                         <ColoredLine color='#333333'/>
                         <p>
                             <span className='lay-stake-info-before'>You could lay : </span>
-                            <span className='lay-stake-info'>  £{this.state.LayStake} </span>
+                            <span className='lay-stake-info'>  £{LayStake} </span>
                         </p>
                     </div>
 
