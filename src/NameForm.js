@@ -14,8 +14,8 @@ class NameForm extends Component {
             LayCommission: '',
             BackCommission: 0,
             SliderValue: 0,
-            min: -20,
-            max:20
+            minUnderLayValue: 0,
+            maxOverLayValue:20
 
         };
 
@@ -25,6 +25,9 @@ class NameForm extends Component {
         this.handleClick = this.handleClick.bind(this);
         this.outputBookieTotal = this.outputBookieTotal.bind(this);
         this.outputExchangeTotal = this.outputExchangeTotal.bind(this);
+        this.handleUnderOverLay = this.handleUnderOverLay.bind(this);
+
+
     }
 
     handleChange(event) {
@@ -36,6 +39,12 @@ class NameForm extends Component {
             }, 1);
         }
         myFunction();
+    }
+
+    handleUnderOverLay (event) {
+        this.setState ({
+            [event.target.name]: event.target.value
+        })
     }
 
     handleRangeInput (event) {
@@ -67,8 +76,8 @@ class NameForm extends Component {
             {
                 LayStake: balancedLayStake,
                 SliderValue: balancedLayStake,
-                max: balancedLayStake + balancedLayStake*0.1,
-                min: balancedLayStake - balancedLayStake*0.1
+                maxOverLayValue: balancedLayStake + balancedLayStake*0.1,
+                minUnderLayValue: balancedLayStake - balancedLayStake*0.1
             }
         )
     }
@@ -193,7 +202,8 @@ class NameForm extends Component {
                     <div>
                         <ColoredLine color='#333333'/>
                         <p>
-                            You could lay : <span className='lay-stake-info'>£{this.state.LayStake} </span>
+                            <span className='lay-stake-info-before'>You could lay : </span>
+                            <span className='lay-stake-info'>  £{this.state.LayStake} </span>
                         </p>
                     </div>
 
@@ -242,10 +252,13 @@ class NameForm extends Component {
 
                 <Slider
                     handleRange = {this.handleRangeInput}
-                    step={0.01}
+                    step={0.001}
                     value={this.state.SliderValue}
-                    min={this.state.min}
-                    max={this.state.max}
+                    minOverLayValue={this.state.minUnderLayValue}
+                    minValueDisplay={this.state.minUnderLayValue}
+                    maxOverLayValue={this.state.maxOverLayValue}
+                    maxValueDisplay={this.state.maxOverLayValue}
+                    handleUnderOverLay = {this.handleUnderOverLay}
                 />
 
             </div>

@@ -97,6 +97,9 @@ font-weight: bold;
 
 }
 
+.lay-stake-info-before{
+  font-size: xx-large;
+}
 
 .lay-stake-info {
   font-weight: bold;
@@ -124,4 +127,9 @@ font-weight: bold;
 input {
   text-align: center;
   font-size: medium;
+}
+
+.slider-flex {
+  display:flex;
+  justify-content: space-evenly;
 }
