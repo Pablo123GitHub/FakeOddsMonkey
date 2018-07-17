@@ -12,7 +12,7 @@ class Slider extends Component {
                     <div className='inside-div'>
                         <form >
                             <label>
-                                <p>UnderLay :</p>
+                                <p className='first-summary'>UnderLay :</p>
                                 <input
                                     value={this.props.minValueDisplay}
                                     onChange={this.props.handleUnderOverLay}
@@ -33,7 +33,7 @@ class Slider extends Component {
                     <div className='inside-div'>
                         <form >
                             <label>
-                                <p>OverLay:</p>
+                                <p className='first-summary'>OverLay:</p>
                                 <input
                                     value={this.props.maxValueDisplay}
                                     onChange={this.props.handleUnderOverLay}

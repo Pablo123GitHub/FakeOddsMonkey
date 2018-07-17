@@ -16,7 +16,6 @@ class NameForm extends Component {
             SliderValue: 0,
             minUnderLayValue: 0,
             maxOverLayValue:20
-
         };
 
         this.handleChange = this.handleChange.bind(this);
@@ -47,7 +46,6 @@ class NameForm extends Component {
     }
 
     handleRangeInput (event) {
-        console.log('THIS IS HANDLERANGEINPUT', event.target.value);
        this.setState({
            SliderValue: event.target.value,
            LayStake: event.target.value
@@ -135,9 +133,9 @@ class NameForm extends Component {
         return (
 
             <div>
-                <ColoredLine color='#333333'/>
+                <h1 className='header-title'> Input numbers to see relevant Lay Stake Amount </h1>
                 <div className='bookmaker'>
-                    <div className='inside-div'>
+                    <div className='inside-div '>
                         <form>
                             <label>
                                 Back Stake :
@@ -161,8 +159,6 @@ class NameForm extends Component {
                         </form>
                     </div>
                 </div>
-
-                <ColoredLine color='#333333'/>
 
                 <div className='exchange'>
                     <div className='inside-div'>
