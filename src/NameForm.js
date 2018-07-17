@@ -41,7 +41,8 @@ class NameForm extends Component {
     handleRangeInput (event) {
         console.log('THIS IS HANDLERANGEINPUT', event.target.value);
        this.setState({
-           SliderValue: event.target.value
+           SliderValue: event.target.value,
+           LayStake: event.target.value
        })
     }
 

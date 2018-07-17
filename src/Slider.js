@@ -18,8 +18,6 @@ class Slider extends Component {
                     type="range"
                     min={this.props.min}
                     max={this.props.max}
-
-
                 />
             </div>
         )
