@@ -85,6 +85,7 @@ body {
   border-bottom: 50px;
 }
 
+
 .inside-div {
   padding-top: 1%;
   padding-bottom: 1%;
@@ -96,8 +97,10 @@ font-weight: bold;
 
 }
 
+
 .lay-stake-info {
   font-weight: bold;
+  font-size: xx-large;
 }
 
 .green {
@@ -116,4 +119,9 @@ font-weight: bold;
 .profit-breakdown {
   margin-left:auto;
   margin-right:auto;
+}
+
+input {
+  text-align: center;
+  font-size: medium;
 }

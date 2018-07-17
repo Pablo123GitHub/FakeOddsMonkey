@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import './App.css';
+import Slider from './Slider';
 
 
-class NameForm extends React.Component {
+class NameForm extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -11,11 +12,15 @@ class NameForm extends React.Component {
             LayStake: '',
             LayOdds : '',
             LayCommission: '',
-            BackCommission: 0
+            BackCommission: 0,
+            SliderValue: 0,
+            min: 0,
+            max:100
 
         };
 
         this.handleChange = this.handleChange.bind(this);
+        this.handleRangeInput = this.handleRangeInput.bind(this);
         this.round = this.round.bind(this);
         this.handleClick = this.handleClick.bind(this);
         this.outputBookieTotal = this.outputBookieTotal.bind(this);
@@ -31,6 +36,13 @@ class NameForm extends React.Component {
             }, 1);
         }
         myFunction();
+    }
+
+    handleRangeInput (event) {
+        console.log('THIS IS HANDLERANGEINPUT', event.target.value);
+       this.setState({
+           SliderValue: event.target.value
+       })
     }
 
 
@@ -171,12 +183,13 @@ class NameForm extends React.Component {
 
                 <div>
 
-                    {this.state.LayStake > 0 &&
+                    {this.state.BackStake > 0 && this.state.BackOdds > 0 &&
+                    this.state.LayOdds > 0 && this.state.LayCommission > 0 &&
 
                     <div>
                         <ColoredLine color='#333333'/>
                         <p>
-                            You could lay : <span className='lay-stake-info'>{"hein", this.state.LayStake} </span>
+                            You could lay : <span className='lay-stake-info'>£{this.state.LayStake} </span>
                         </p>
                     </div>
 
@@ -219,6 +232,17 @@ class NameForm extends React.Component {
 
                     </table>
                 </div>
+                <ColoredLine color='#333333'/>
+
+                <h1 className='header-title'> Customize Lay Stake </h1>
+
+                <Slider
+                    handleRange = {this.handleRangeInput}
+                    step={0.01}
+                    value={this.state.SliderValue}
+                    min={this.state.min}
+                    max={this.state.max}
+                />
 
             </div>
         );
