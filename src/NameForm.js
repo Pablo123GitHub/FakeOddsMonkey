@@ -15,7 +15,8 @@ class NameForm extends Component {
             BackCommission: 0,
             SliderValue: 0,
             minUnderLayValue: 0,
-            maxOverLayValue:20
+            maxOverLayValue:20,
+            qualifyingBet: false
         };
 
         this.handleChange = this.handleChange.bind(this);
@@ -97,7 +98,7 @@ class NameForm extends Component {
         const LayCommission =  isNaN(parseInt(this.state.LayCommission)) ? 0 : parseInt(this.state.LayCommission) ;
         const LayProfit =  isNaN(LayStake - LayStake*(LayCommission/100)) ? 0 : parseFloat(LayStake - LayStake*(LayCommission/100)) ;
 
-        return -BackStake + LayProfit;
+        return this.state.qualifyingBet ? -BackStake + LayProfit : LayProfit;
     }
 
     render() {
@@ -128,7 +129,7 @@ class NameForm extends Component {
         const BookieProfitInput = ( parseFloat(this.state.BackStake) * (parseFloat(this.state.BackOdds) - 1));
         const BookieProfit = isNaN(BookieProfitInput) ? 0 : BookieProfitInput;
         const isBookieProfitable = this.round(BookieProfit - ExchangeLiability, 2) >=0;
-        const isExchangeProfitable = this.round(-BackStake + LayProfit,2) >= 0;
+        const isExchangeProfitable = this.round(-(this.state.qualifyingBet ? BackStake: 0) + LayProfit,2) >= 0;
 
         return (
 
@@ -231,7 +232,7 @@ class NameForm extends Component {
                         </tr>
                         <tr>
                             <td className='table-header-exchange'>If Exchange wins</td>
-                            <td><span className='first-summary red'>-£{this.round(BackStake,2)}</span></td>
+                            <td><span className='first-summary red'>-£{this.state.qualifyingBet ? this.round(BackStake,2) : 0}</span></td>
                             <td><span className='first-summary green'>+£{this.round(LayProfit,2)}</span></td>
                             <td>=</td>
                             <td><span className={isExchangeProfitable ? 'first-summary green': 'first-summary red'}>
