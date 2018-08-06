@@ -31,5 +31,11 @@ exchange platform (in pink). The Lay stake is then automatically
  computed, and displayed in real time on the form. 
 
 You can choose one of two options by clicking on the button at the top of the page:
-"Qualyfing Bet" Or "Stake No Return"
+"Qualyfing Bet" Or "Stake No Return". Based on the selected option, the form 
+will display the relevant profit breakdown. 
+
+You can change the Lay stake with the slider at the bottom of the page. The slider
+minimum and maximum values can be edited.
+
+
 
