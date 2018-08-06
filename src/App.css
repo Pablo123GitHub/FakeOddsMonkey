@@ -139,7 +139,8 @@ input {
 }
 
 .btn-group .button {
-  background-color: #4CAF50; /* Green */
+  margin-top: 10px;
+  background-color: #222;
   border: 1px solid green;
   color: white;
   padding: 15px 32px;
@@ -153,5 +154,5 @@ input {
   border-right: none; /* Prevent double borders */
 }
 .btn-group .button:hover {
-  background-color: #3e8e41;
+  background-color: yellowgreen;
 }

@@ -34,6 +34,13 @@ class NameForm extends Component {
         this.setState({
             qualifyingBet: !this.state.qualifyingBet
         })
+        const that = this;
+        function myFunction() {
+            setTimeout(function(){
+                that.handleClick();
+            }, 1);
+        }
+        myFunction();
     }
 
     handleChange(event) {
@@ -89,6 +96,7 @@ class NameForm extends Component {
 
 
     outputBookieTotal (LayStake) {
+
         const BookieProfitInput = ( parseFloat(this.state.BackStake) * (parseFloat(this.state.BackOdds) - 1));
         const BookieProfit = isNaN(BookieProfitInput) ? 0 : BookieProfitInput;
         const LayOdds = isNaN(this.state.LayOdds) ? 0: this.state.LayOdds;
@@ -120,7 +128,7 @@ class NameForm extends Component {
         );
 
         const BackStakeFirst = isNaN(this.state.BackStake) ? 0 : parseFloat(this.state.BackStake);
-        const BackStake = (isNaN(BackStakeFirst) ? 0 : parseFloat(BackStakeFirst));
+        const BackStake = (isNaN(BackStakeFirst) ? 0 : this.state.qualifyingBet ? parseFloat(BackStakeFirst) : 0);
 
         const BackOddsFirst = isNaN(this.state.BackOdds) ? 0 : parseFloat(this.state.BackOdds);
         const BackOdds = (isNaN(BackOddsFirst) ? 0 : parseFloat(BackOddsFirst));
@@ -128,7 +136,7 @@ class NameForm extends Component {
 
         const LayCommission =  isNaN(parseInt(this.state.LayCommission)) ? 0 : parseInt(this.state.LayCommission) ;
         const LayProfit =  isNaN(LayStake - LayStake*(LayCommission/100)) ? 0 : parseFloat(LayStake - LayStake*(LayCommission/100)) ;
-        const LayOdds = this.round(isNaN(this.state.LayOdds) ? 0: this.state.LayOdds, 2);
+        const LayOdds = (isNaN(this.state.LayOdds) ? 0: this.state.LayOdds);
 
         const ExchangeLiabilityInput = (parseFloat(LayStake) * (parseFloat(LayOdds) - 1));
         const ExchangeLiability =  isNaN(ExchangeLiabilityInput) ? 0 : ExchangeLiabilityInput;
@@ -141,8 +149,9 @@ class NameForm extends Component {
         return (
 
             <div>
-                <div class="btn-group">
-                    <button class="button" onClick={this.handleQualifyingBetMode}>{this.state.qualifyingBet ? <h2>Qualifying Bet mode</h2> : <h2> Stake No Return</h2>}</button>
+                <h1 className='header-title'> Click below button to switch Bet mode calculation</h1>
+                <div className="btn-group">
+                    <button className="button" onClick={this.handleQualifyingBetMode}>{this.state.qualifyingBet ? <h2>Qualifying Bet mode</h2> : <h2> Stake No Return mode</h2>}</button>
                 </div>
 
                 <h1 className='header-title'> Input numbers to see relevant Lay Stake Amount </h1>
@@ -174,7 +183,8 @@ class NameForm extends Component {
 
                 <div className='exchange'>
                     <div className='inside-div'>
-                        {BackStake>0 && BackOdds > 0 && LayOdds > 0 && LayCommission > 0 &&
+                        {(BackStake>0 || !this.state.qualifyingBet) && BackOdds > 0 && LayOdds> 0 && LayCommission > 0 &&
+
                         <form >
                             <label>
                                 Lay Stake:
@@ -182,10 +192,10 @@ class NameForm extends Component {
                             </label>
                         </form>}
 
-                        <form >
+                        <form>
                             <label>
                                 Lay Odds:
-                                <input type="text" name="LayOdds" value={this.state.LayOdds} onChange={this.handleChange} />
+                                <input type="text" name="LayOdds" value={LayOdds} onChange={this.handleChange} />
                             </label>
                         </form>
 
@@ -194,13 +204,11 @@ class NameForm extends Component {
                         <form >
                             <label>
                                 Lay Commission:
-                                <input type="text" name="LayCommission" value={this.state.LayCommission} onChange={this.handleChange} />
+                                <input type="text" name="LayCommission" value={LayCommission} onChange={this.handleChange} />
                             </label>
                         </form>
                     </div>
-
                 </div>
-
                 <div>
 
                     {this.state.BackStake > 0 && this.state.BackOdds > 0 &&
@@ -243,7 +251,7 @@ class NameForm extends Component {
                         </tr>
                         <tr>
                             <td className='table-header-exchange'>If Exchange wins</td>
-                            <td><span className='first-summary red'>-£{this.state.qualifyingBet ? this.round(BackStake,2) : 0}</span></td>
+                            <td><span className='first-summary red'>-£{this.state.qualifyingBet ? this.round(BackStake,2) : this.round(0,2)}</span></td>
                             <td><span className='first-summary green'>+£{this.round(LayProfit,2)}</span></td>
                             <td>=</td>
                             <td><span className={isExchangeProfitable ? 'first-summary green': 'first-summary red'}>
@@ -267,7 +275,6 @@ class NameForm extends Component {
                     maxValueDisplay={this.state.maxOverLayValue}
                     handleUnderOverLay = {this.handleUnderOverLay}
                 />
-
             </div>
         );
     }
