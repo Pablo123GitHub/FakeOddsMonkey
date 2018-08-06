@@ -8,6 +8,7 @@ class Slider extends Component {
                 <h1>
                     Use slider to change Lay Stake
                 </h1>
+
                 <div className='slider-flex'>
                     <div className='inside-div'>
                         <form >

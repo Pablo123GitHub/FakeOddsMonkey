@@ -44,14 +44,20 @@ class NameForm extends Component {
     }
 
     handleChange(event) {
-        this.setState({[event.target.name]: event.target.value });
-        const that = this;
-        function myFunction() {
-            setTimeout(function(){
-                that.handleClick();
-            }, 1);
+
+        if (event.target.name === "LayStake") {
+            alert('This value can be changed with the Slider at the bottom of the page');
+        } else {
+            this.setState({[event.target.name]: event.target.value });
+            const that = this;
+            function myFunction() {
+                setTimeout(function(){
+                    that.handleClick();
+                }, 1);
+            }
+            myFunction();
         }
-        myFunction();
+
     }
 
     handleUnderOverLay (event) {
