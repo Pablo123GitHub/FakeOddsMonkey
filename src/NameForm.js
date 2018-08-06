@@ -16,7 +16,7 @@ class NameForm extends Component {
             SliderValue: 0,
             minUnderLayValue: 0,
             maxOverLayValue:20,
-            qualifyingBet: false
+            qualifyingBet: true
         };
 
         this.handleChange = this.handleChange.bind(this);
@@ -26,7 +26,14 @@ class NameForm extends Component {
         this.outputBookieTotal = this.outputBookieTotal.bind(this);
         this.outputExchangeTotal = this.outputExchangeTotal.bind(this);
         this.handleUnderOverLay = this.handleUnderOverLay.bind(this);
+        this.handleQualifyingBetMode = this.handleQualifyingBetMode.bind(this);
 
+    }
+
+    handleQualifyingBetMode(){
+        this.setState({
+            qualifyingBet: !this.state.qualifyingBet
+        })
     }
 
     handleChange(event) {
@@ -134,6 +141,10 @@ class NameForm extends Component {
         return (
 
             <div>
+                <div class="btn-group">
+                    <button class="button" onClick={this.handleQualifyingBetMode}>{this.state.qualifyingBet ? <h2>Qualifying Bet mode</h2> : <h2> Stake No Return</h2>}</button>
+                </div>
+
                 <h1 className='header-title'> Input numbers to see relevant Lay Stake Amount </h1>
                 <div className='bookmaker'>
                     <div className='inside-div '>
